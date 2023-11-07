@@ -1,0 +1,33 @@
+import pandas as pd 
+import numpy as np 
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn.neighbors import KNeighborsClassifier
+
+data=pd.read_csv('emails.csv')
+df=data.copy()
+
+df.head
+
+df.columns
+
+df.isnull().sum()
+
+df
+
+df.drop(columns='Email No.', inplace=True)
+df
+
+df['Prediction']=df['Prediction'].replace({0:'Not spam',1:'Spam'})
+
+X = df.drop(columns='Prediction',axis = 1)
+Y = df['Prediction']
+
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+
+model = KNeighborsClassifier()
+model.fit(x_train, y_train)
+y_pred = model.predict(x_test)
+accuracy=metrics.accuracy_score(y_test,y_pred)
+print('Accuracy of model',accuracy)
