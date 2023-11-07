@@ -7,3 +7,19 @@ n = int(input("Enter the number of terms: "))
 print("Fibonacci sequence:")
 for i in range(n):
     print(fibonacci(i))
+//////////////////////////////////////////////////////////////
+# non - recursive 
+
+def fibonacci(n):
+    fib_series = []
+    a, b = 0, 1
+    for _ in range(n):
+        fib_series.append(a)
+        a, b = b, a + b
+    return fib_series
+
+# Example usage:
+n = int(input("Enter number of terms: ")) 
+fib_series = fibonacci(n)
+print("Fibonacci Series:")
+print(fib_series)
