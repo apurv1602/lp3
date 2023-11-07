@@ -1,43 +1,29 @@
-class KnapsackPackage(object):
-    def __init__(self, weight, value):
+class Item:
+    def __init__(self, profit, weight):
+        self.profit = profit
         self.weight = weight
-        self.value = value
-        self.cost = value / weight
 
-    def __lt__(self, other):
-        return self.cost < other.cost
-
-class FractionalKnapsack(object):
-    def __init__(self):
-        pass
-
-    def knapsackGreProc(self, W, V, M, n):
-        packs = []
-        for i in range(n):
-            packs.append(KnapsackPackage(W[i], V[i]))
-        packs.sort(reverse=True)
-        remain = M
-        result = 0
-        i = 0
-        stopProc = False
-        while not stopProc:
-            if packs[i].weight <= remain:
-                remain -= packs[i].weight
-                result += packs[i].value
-                print("Pack", i, "- Weight:", packs[i].weight, "- Value:", packs[i].value)
-            if packs[i].weight > remain:
-                i += 1
-            if i == n:
-                stopProc = True
-        print("Max Value:\t", result)
+def fractionalKnapsack(w, arr):
+    arr.sort(key=lambda x: x.profit/x.weight, reverse=True)
+    finalValue = 0.0
+    for item in arr:
+        if w >= item.weight:
+            finalValue += item.profit
+            w -= item.weight
+        else:
+            finalValue += item.profit * (w/item.weight)
+            break
+    return finalValue
 
 if __name__ == "__main__":
-    W = [15, 10, 2, 4]
-    V = [30, 25, 2, 6]
-    M = 37
-    n = 4
-    proc = FractionalKnapsack()
-    proc.knapsackGreProc(W, V, M, n)
+    n = int(input("Enter number of items-\n"))
+    arr = []
+    for i in range(n):
+        profit = int(input("Enter profit of item " + str(i + 1) + "-\n"))
+        weight = int(input("Enter weight of item " + str(i + 1) + "-\n"))
+        arr.append(Item(profit, weight))
+    w = int(input("Enter capacity of knapsack-\n"))
+    print("Maximum value in knapsack: ", fractionalKnapsack(w, arr))
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 # Structure for an item which stores weight and
