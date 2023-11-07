@@ -1,0 +1,18 @@
+def jobsequence(jobs):
+    jobs.sort( key=lambda x : x[2],reverse=True)
+    max_deadline = max(jobs, key=lambda x:x[1])[1]
+    time_slot= [-1]*(max_deadline+1)
+    
+    for job in jobs:
+        deadline=job[1]
+        for slot in range(deadline,0,-1):
+            if time_slot[slot]==-1:
+                time_slot[slot]=job[0]
+                break
+
+
+    return time_slot
+job_list=[('a',4,40),('b',2,30),('c',1,50),('d',4,10)]
+
+result=(jobsequence(job_list))
+print("Job Sequence:" , result[1:])
